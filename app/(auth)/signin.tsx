@@ -44,7 +44,7 @@ export default function Signin() {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
       <ScrollView
         contentContainerClassName="gap-2 p-4"
-        contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}
         showsVerticalScrollIndicator={false}>
         <View>
           <Text className="pb-5 text-2xl font-extrabold text-green-800">FloraID</Text>

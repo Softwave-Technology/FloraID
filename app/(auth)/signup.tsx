@@ -41,21 +41,21 @@ export default function Signup() {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'height' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       className="flex-1"
       keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
       <ScrollView
         contentContainerClassName="gap-2 p-4"
-        contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+        contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}
         showsVerticalScrollIndicator={false}>
         <Text className="pb-5 text-2xl font-extrabold text-green-800">FloraID</Text>
-        <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
+        <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
           <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
         </View>
-        <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
+        <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
           <TextInput value={fullName} onChangeText={setFullName} placeholder="Full Name" />
         </View>
-        <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
+        <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
           <TextInput value={password} onChangeText={setPassword} placeholder="Password" />
         </View>
         <Pressable
