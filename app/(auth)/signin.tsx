@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, View, TextInput, Text, Pressable } from 'react-native';
+import { Alert, View, TextInput, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useAuthStore } from '~/store/useAuthStore';
 
 export default function Signin() {
@@ -18,5 +18,38 @@ export default function Signin() {
       router.replace('/(home)');
     }
   };
-  return <View className="flex-1 justify-center" />;
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
+  }
+
+  return (
+    <View className="flex-1 items-center justify-center gap-2 p-4">
+      <View>
+        <Text className="pb-5 text-2xl font-extrabold text-green-800">FloraID</Text>
+      </View>
+      <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
+        <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
+      </View>
+      <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
+        <TextInput value={password} onChangeText={setPassword} placeholder="Password" />
+      </View>
+      {/* Error state and warning text */}
+      <Pressable
+        className="border-hairline mt-4 w-full items-center rounded-lg bg-green-800 p-4"
+        onPress={handleSignIn}>
+        <Text className="text-lg font-extrabold text-white">Sign In</Text>
+      </Pressable>
+      <View className="flex-row items-center gap-2 p-2">
+        <Text className="text-gray-400">Do not you have an account?</Text>
+        <Pressable onPress={() => router.push('/(auth)/signup')}>
+          <Text className="font-bold text-green-800">Sign Up</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
