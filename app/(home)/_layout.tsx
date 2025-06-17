@@ -1,8 +1,13 @@
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 
 import { TabBarIcon } from '../../components/TabBarIcon';
+import { useAuthStore } from '~/store/useAuthStore';
 
 export default function TabLayout() {
+  const { user } = useAuthStore();
+  if (!user) {
+    return <Redirect href={'/(auth)/signin'} />;
+  }
   return (
     <Tabs
       screenOptions={{
