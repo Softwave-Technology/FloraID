@@ -1,6 +1,16 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, View, TextInput, Pressable, Text, ActivityIndicator } from 'react-native';
+import {
+  Alert,
+  View,
+  TextInput,
+  Pressable,
+  Text,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import { useAuthStore } from '~/store/useAuthStore';
 
 export default function Signup() {
@@ -30,28 +40,36 @@ export default function Signup() {
   }
 
   return (
-    <View className="flex-1 items-center justify-center gap-2 p-4">
-      <Text className="pb-5 text-2xl font-extrabold text-green-800">FloraID</Text>
-      <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
-        <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
-      </View>
-      <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
-        <TextInput value={fullName} onChangeText={setFullName} placeholder="Full Name" />
-      </View>
-      <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
-        <TextInput value={password} onChangeText={setPassword} placeholder="Password" />
-      </View>
-      <Pressable
-        onPress={handleSignUp}
-        className="border-hairline mt-4 w-full items-center rounded-lg border-gray-400 bg-green-800 p-4">
-        <Text className="text-lg font-extrabold text-white">Sign Up</Text>
-      </Pressable>
-      <View className="flex-row items-center gap-2 p-2">
-        <Text className="text-gray-400">Already have an account?</Text>
-        <Pressable onPress={() => router.push('/(auth)/signin')}>
-          <Text className="font-bold text-green-800">Sign In</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'height' : undefined}
+      className="flex-1"
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
+      <ScrollView
+        contentContainerClassName="gap-2 p-4"
+        contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+        showsVerticalScrollIndicator={false}>
+        <Text className="pb-5 text-2xl font-extrabold text-green-800">FloraID</Text>
+        <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
+          <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
+        </View>
+        <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
+          <TextInput value={fullName} onChangeText={setFullName} placeholder="Full Name" />
+        </View>
+        <View className="border-hairline mb-4 w-full rounded-lg border-gray-400 p-4">
+          <TextInput value={password} onChangeText={setPassword} placeholder="Password" />
+        </View>
+        <Pressable
+          onPress={handleSignUp}
+          className="border-hairline mt-4 w-full items-center rounded-lg border-gray-400 bg-green-800 p-4">
+          <Text className="text-lg font-extrabold text-white">Sign Up</Text>
         </Pressable>
-      </View>
-    </View>
+        <View className="flex-row items-center gap-2 p-2">
+          <Text className="text-gray-400">Already have an account?</Text>
+          <Pressable onPress={() => router.push('/(auth)/signin')}>
+            <Text className="font-bold text-green-800">Sign In</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
