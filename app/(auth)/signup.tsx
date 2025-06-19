@@ -62,6 +62,7 @@ export default function Signup() {
             placeholder="Password"
             secureTextEntry
           />
+          {/* Add show password icon with functionality */}
         </View>
         <Pressable
           onPress={handleSignUp}

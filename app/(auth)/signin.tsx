@@ -59,8 +59,9 @@ export default function Signin() {
             placeholder="Password"
             secureTextEntry
           />
+          {/* Add show password icon with functionality */}
         </View>
-        {/* Error state and warning text */}
+        {/* Add Error state and warning text */}
         <Pressable
           className="border-hairline mt-4 w-full items-center rounded-lg bg-green-800 p-4"
           onPress={handleSignIn}>
