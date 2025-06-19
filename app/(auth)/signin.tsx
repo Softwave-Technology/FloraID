@@ -53,7 +53,12 @@ export default function Signin() {
           <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
         </View>
         <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
-          <TextInput value={password} onChangeText={setPassword} placeholder="Password" />
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password"
+            secureTextEntry
+          />
         </View>
         {/* Error state and warning text */}
         <Pressable

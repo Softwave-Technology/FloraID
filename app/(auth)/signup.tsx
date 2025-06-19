@@ -56,7 +56,12 @@ export default function Signup() {
           <TextInput value={fullName} onChangeText={setFullName} placeholder="Full Name" />
         </View>
         <View className="border-hairline w-full rounded-lg border-gray-400 p-4">
-          <TextInput value={password} onChangeText={setPassword} placeholder="Password" />
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password"
+            secureTextEntry
+          />
         </View>
         <Pressable
           onPress={handleSignUp}
