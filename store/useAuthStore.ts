@@ -10,6 +10,7 @@ interface AuthStore {
   user: User | null;
   profile: any;
   loading: boolean;
+  initialized: boolean;
 
   signIn: (email: string, password: string) => Promise<any>;
   signUp: (email: string, password: string, fullName: string) => Promise<any>;
@@ -17,12 +18,14 @@ interface AuthStore {
   setUser: (user: User | null) => void;
   setProfile: (profile: any) => void;
   loadProfile: () => Promise<void>;
+  setInitialized: (initialized: boolean) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
   user: null,
   profile: null,
   loading: false,
+  initialized: false,
 
   signIn: async (email: string, password: string) => {
     set({ loading: true });
@@ -50,6 +53,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   setUser: (user: User | null) => set({ user }),
 
   setProfile: (profile: any) => set({ profile }),
+
+  setInitialized: (initialized: boolean) => set({ initialized }),
 
   loadProfile: async () => {
     const { user } = get();
@@ -167,7 +172,7 @@ export const useCollectionStore = create<CollectionStore>((set, get) => ({
 }));
 
 export const useAuth = () => {
-  const { setUser, loadProfile } = useAuthStore();
+  const { setUser, loadProfile, setInitialized } = useAuthStore();
 
   useEffect(() => {
     // Get initial session
@@ -176,6 +181,7 @@ export const useAuth = () => {
       if (session?.user) {
         loadProfile();
       }
+      setInitialized(true);
     });
 
     // Listen for auth changes
