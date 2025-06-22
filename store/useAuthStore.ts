@@ -10,7 +10,6 @@ interface AuthStore {
   user: User | null;
   profile: any;
   loading: boolean;
-  initialized: boolean;
 
   signIn: (email: string, password: string) => Promise<any>;
   signUp: (email: string, password: string, fullName: string) => Promise<any>;
@@ -18,14 +17,12 @@ interface AuthStore {
   setUser: (user: User | null) => void;
   setProfile: (profile: any) => void;
   loadProfile: () => Promise<void>;
-  setInitialized: (initialized: boolean) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
   user: null,
   profile: null,
   loading: false,
-  initialized: false,
 
   signIn: async (email: string, password: string) => {
     set({ loading: true });
@@ -53,8 +50,6 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   setUser: (user: User | null) => set({ user }),
 
   setProfile: (profile: any) => set({ profile }),
-
-  setInitialized: (initialized: boolean) => set({ initialized }),
 
   loadProfile: async () => {
     const { user } = get();
@@ -172,25 +167,42 @@ export const useCollectionStore = create<CollectionStore>((set, get) => ({
 }));
 
 export const useAuth = () => {
-  const { setUser, loadProfile, setInitialized } = useAuthStore();
+  const { setUser, loadProfile, signOut } = useAuthStore();
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadProfile();
-      }
-      setInitialized(true);
-    });
+    const initAuth = async () => {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-    // Listen for auth changes
+        if (!session?.user) {
+          console.log('No valid session found → signing out');
+          await signOut();
+          setUser(null);
+        } else {
+          console.log('Valid session found');
+          setUser(session.user);
+          await loadProfile();
+        }
+      } catch (err) {
+        console.log('getSession catch error', err);
+        await signOut();
+      }
+    };
+
+    initAuth();
+
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadProfile();
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('onAuthStateChange', event);
+      if (!session?.user) {
+        await signOut();
+        setUser(null);
+      } else {
+        setUser(session.user);
+        await loadProfile();
       }
     });
 

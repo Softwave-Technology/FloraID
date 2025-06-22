@@ -5,6 +5,7 @@ import { useAuthStore } from '~/store/useAuthStore';
 
 export default function TabLayout() {
   const { user } = useAuthStore();
+
   if (!user) {
     return <Redirect href={'/(auth)/signin'} />;
   }
