@@ -1,4 +1,3 @@
-// lib/auth.ts
 import { supabase } from './supabase';
 
 export const authService = {
@@ -25,7 +24,7 @@ export const authService = {
 
   // Sign out
   signOut: async () => {
-    return await supabase.auth.signOut();
+    return await supabase.auth.signOut({ scope: 'local' });
   },
 
   // Get current user
