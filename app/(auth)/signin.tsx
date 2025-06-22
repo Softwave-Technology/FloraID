@@ -11,25 +11,36 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { useAuthStore } from '~/store/useAuthStore';
+import { supabase } from '~/utils/supabase';
 
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn, loading } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
-    const result = await signIn(email, password);
-    if (result.error) {
-      console.log(result.error);
-      Alert.alert('Error while signing in ', result.error.message);
-    } else {
-      Alert.alert('Success', 'Welcome back!');
-      router.replace('/(home)');
+    if (!email || !password) {
+      Alert.alert('Please enter an email and password');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) Alert.alert(error.message);
+    } catch (error: any) {
+      console.error('Login error:', error);
+      Alert.alert('Login error:', error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
         <ActivityIndicator size={'large'} />
