@@ -1,24 +1,32 @@
 import { View, Text, Image } from 'react-native';
-import { LegendList } from '@legendapp/list';
+//import { LegendList } from '@legendapp/list';
+import { FlashList } from '@shopify/flash-list';
 import plants from '../assets/plants.json';
 
 export default function PlantCard() {
   return (
-    <View className="p-2">
-      <LegendList
-        className="flex-1 gap-2"
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={plants}
-        renderItem={({ item }) => (
-          <View className="m-2 items-center space-x-2 border-b border-gray-200 p-2">
-            <Image source={{ uri: item.image }} className="h-32 w-32" />
-            <Text className="text-md font-bold">{item.name}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-        estimatedItemSize={25}
-      />
-    </View>
+    <FlashList
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      data={plants}
+      renderItem={({ item }) => (
+        <View className="w-50 m-4 items-center rounded-2xl bg-white p-6 shadow shadow-black/10">
+          {item.image ? (
+            <Image
+              source={{ uri: item.image }}
+              className="mb-3 h-32 w-32 rounded-xl"
+              resizeMode="cover"
+            />
+          ) : (
+            <View className="mb-3 h-32 w-32 rounded-xl bg-gray-300" />
+          )}
+          <Text className="text-md text-center text-base font-semibold text-[#2C2C2C]">
+            {item.name}
+          </Text>
+        </View>
+      )}
+      keyExtractor={(item) => item.id}
+      estimatedItemSize={25}
+    />
   );
 }
