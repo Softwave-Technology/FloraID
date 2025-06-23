@@ -10,7 +10,7 @@ export default function Home() {
         <View className="border-b-hairline flex-row items-center justify-between border-bordergray p-2">
           <Text className=" pl-2 text-xl font-extrabold text-primary">Welcome to FloraID</Text>
           {/* Route to users profile and signout etc. */}
-          <FontAwesome name="user" size={24} color={'gray'} onPress={() => {}} />
+          <FontAwesome name="user" size={24} color={'gray'} onPress={() => {}} className="pr-2" />
         </View>
         <View className="p-2">
           {/* Explore plants horizontal list */}
