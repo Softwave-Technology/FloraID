@@ -1,13 +1,17 @@
-import { View, Text, SafeAreaView, Platform, StatusBar, Button } from 'react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 import PlantCard from '~/components/PlantCard';
+import VegetableCard from '~/components/VegetableCard';
 
 export default function Home() {
   return (
     <View className="flex-1 bg-offwhite">
       <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
-        <Text className="border-b-hairline border-bordergray p-2 text-xl font-extrabold text-primary">
-          Welcome to FloraID 👋
-        </Text>
+        <View className="border-b-hairline flex-row items-center justify-between border-bordergray p-2">
+          <Text className=" text-xl font-extrabold text-primary">Welcome to FloraID 👋</Text>
+          {/* Route to users profile and signout etc. */}
+          <FontAwesome name="user" size={24} color={'gray'} onPress={() => {}} />
+        </View>
         <View className="p-2">
           {/* Explore plants horizontal list */}
           <Text className="text-xl font-bold">Explore Plants</Text>
@@ -15,15 +19,12 @@ export default function Home() {
         </View>
         <View className="p-2">
           {/*Explore vegetables horizontal list*/}
-          <Text className="text-xl font-bold">Grow Your Own Vegetables</Text>
+          <Text className="text-xl font-bold text-darktext">Grow Your Own Vegetables</Text>
+          <VegetableCard />
         </View>
         <View className="p-2">
-          <Text className="text-lg font-bold text-darktext">Identify a plant</Text>
-          <View className="items-center">
-            <Button title="Take photo" />
-            <Text>or</Text>
-            <Button title="Upload an image" />
-          </View>
+          {/* Store identification photos and show here for history */}
+          <Text className="text-xl font-bold text-darktext">Recent Identifications</Text>
         </View>
       </SafeAreaView>
     </View>
