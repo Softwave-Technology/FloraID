@@ -5,9 +5,7 @@ export async function identifyPlant(imageUrl: string): Promise<{
 }> {
   const prompt = `
 You are a plant identification expert AI. Given the image below, identify the plant.
-
 Respond ONLY in strict JSON format:
-
 {
   "identified_name": "Plant Name",
   "confidence_score": 0.95,
@@ -19,7 +17,6 @@ Respond ONLY in strict JSON format:
     "care_instructions": "..."
   }
 }
-
 IMPORTANT:
 - confidence_score must be between 0.00 and 1.00
 - Be honest in confidence — if unsure, use a lower confidence_score
