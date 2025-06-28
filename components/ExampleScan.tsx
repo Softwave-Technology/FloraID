@@ -1,11 +1,6 @@
-import { useState } from 'react';
 import { View, Text, Image, Pressable, ActivityIndicator } from 'react-native';
 
-export default function HowToScanOverlay() {
-  const [visible, setVisible] = useState(true);
-
-  if (!visible) return null;
-
+export default function HowToScanOverlay({ onDismiss }: { onDismiss: () => void }) {
   return (
     <View className="border-hairline m-6 items-center justify-center gap-2 rounded-xl border-bordergray bg-accent p-2">
       {/* Example image */}
@@ -24,7 +19,7 @@ export default function HowToScanOverlay() {
       </Text>
 
       {/* Button */}
-      <Pressable onPress={() => setVisible(false)} className="rounded-full bg-green-700 px-6 py-3">
+      <Pressable onPress={onDismiss} className="rounded-full bg-green-700 px-6 py-3">
         <Text className="p-2 text-lg font-bold text-white">I understand.</Text>
       </Pressable>
     </View>

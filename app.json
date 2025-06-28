@@ -14,7 +14,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "This app uses the camera to identify plants."
+          "cameraPermission": "Allow FloraID to access your camera to identify plants."
         }
       ],
       "expo-web-browser"
@@ -31,9 +31,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anilyavas.FloraID"
