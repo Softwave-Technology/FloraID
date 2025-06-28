@@ -7,7 +7,7 @@ export default function HowToScanOverlay() {
   if (!visible) return null;
 
   return (
-    <View className="m-6 items-center justify-center gap-2 rounded-lg bg-black/30 p-2">
+    <View className="border-hairline m-6 items-center justify-center gap-2 rounded-xl border-bordergray bg-accent p-2">
       {/* Example image */}
       <Image
         source={{
@@ -17,7 +17,6 @@ export default function HowToScanOverlay() {
         resizeMode="cover"
         onLoad={() => <ActivityIndicator size={'large'} style={{ alignSelf: 'center' }} />}
       />
-
       {/* Instructions */}
       <Text className="mb-4 px-6 text-center text-lg font-bold text-primary">
         Make sure the plant is centered and clear. Use good lighting and avoid cluttered
