@@ -6,7 +6,11 @@ import VegetableCard from '~/components/VegetableCard';
 export default function Home() {
   return (
     <View className="flex-1 bg-offwhite">
-      <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+      <SafeAreaView
+        style={{
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          paddingBottom: Platform.OS === 'android' ? 80 : 0,
+        }}>
         <View className="border-b-hairline flex-row items-center justify-between border-bordergray p-2">
           <Text className=" pl-2 text-xl font-extrabold text-primary">Welcome to FloraID</Text>
           {/* Route to users profile and signout etc. */}

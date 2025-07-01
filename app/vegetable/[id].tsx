@@ -9,6 +9,8 @@ import {
   ScrollView,
   Pressable,
   ActivityIndicator,
+  Platform,
+  StatusBar,
 } from 'react-native';
 
 import vegetable from '../../assets/vegetables.json';
@@ -20,7 +22,12 @@ export default function PlantDetails() {
 
   return (
     <View className="flex-1 bg-offwhite">
-      <SafeAreaView className="flex-1">
+      <SafeAreaView
+        className="flex-1"
+        style={{
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          paddingBottom: Platform.OS === 'android' ? 80 : 0,
+        }}>
         <View className="px-4 pb-1 pt-2">
           <Pressable onPress={() => router.back()} className="flex-row items-center gap-1">
             <FontAwesome size={20} color="#4B6C4A" name="arrow-left" />

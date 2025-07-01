@@ -4,7 +4,6 @@ import ExampleScan from '~/components/ExampleScan';
 import { CameraType, useCameraPermissions, CameraView } from 'expo-camera';
 
 export default function IdentifyScreen() {
-  const [instruction, setInstruction] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
   const [facing, setFacing] = useState<CameraType>('back');
 
@@ -18,23 +17,25 @@ export default function IdentifyScreen() {
     setFacing((prev) => (prev === 'back' ? 'front' : 'back'));
   };
 
-  if (instruction && !permission?.granted) {
-    return (
-      <View className="flex-1 items-center justify-center bg-offwhite">
-        <Text className="text-lg">Waiting for camera permission...</Text>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  const takePhoto = async () => {
+    // take photo
+  };
 
   return (
     <View className="flex-1 justify-center bg-offwhite">
       <SafeAreaView
-        style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, flex: 1 }}>
-        {instruction && permission?.granted ? (
-          <CameraView style={{ flex: 1 }} facing={facing} />
+        style={{
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          flex: 1,
+          paddingBottom: Platform.OS === 'android' ? 80 : 0,
+        }}>
+        {permission?.granted ? (
+          <CameraView facing={facing} style={{ flex: 1 }} />
         ) : (
-          <ExampleScan onDismiss={() => setInstruction(true)} />
+          <View className="flex-1 items-center justify-center">
+            <Text>Waiting for permission...</Text>
+            <ActivityIndicator size={'large'} />
+          </View>
         )}
       </SafeAreaView>
     </View>
