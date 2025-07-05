@@ -9,6 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 import { CameraView, useCameraPermissions, CameraType } from 'expo-camera';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function IdentifyScreen() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -63,7 +64,7 @@ export default function IdentifyScreen() {
           <View className="absolute inset-0 justify-between p-4">
             <View className="items-end">
               <Pressable onPress={toggleCameraFacing}>
-                <Text className="text-lg font-semibold text-white">Flip</Text>
+                <MaterialIcons name="flip-camera-ios" size={24} color={'white'} />
               </Pressable>
             </View>
           </View>
