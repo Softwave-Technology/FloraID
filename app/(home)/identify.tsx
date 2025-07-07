@@ -7,14 +7,20 @@ import {
   SafeAreaView,
   ActivityIndicator,
   Pressable,
+  Alert,
 } from 'react-native';
 import { CameraView, useCameraPermissions, CameraType } from 'expo-camera';
 import { MaterialIcons } from '@expo/vector-icons';
+import { supabase } from '~/utils/supabase';
+import { identifyPlant } from '~/utils/identifyPlants';
+import { useAuth } from '~/providers/AuthContext';
 
 export default function IdentifyScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const [facing, setFacing] = useState<CameraType>('back');
+  const [loading, setLoading] = useState(false);
   const cameraRef = useRef<CameraView>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -27,10 +33,47 @@ export default function IdentifyScreen() {
   };
 
   const takePicture = async () => {
-    if (cameraRef.current) {
+    if (!cameraRef.current || !user) return;
+
+    try {
+      setLoading(true);
+
       const photo = await cameraRef.current.takePictureAsync();
-      console.log('Photo taken:', photo.uri);
-      // pass photo.uri to AI function here
+      const photoRes = await fetch(photo.uri);
+      const blob = await photoRes.blob();
+
+      const fileName = `${user.id}-${Date.now()}.jpg`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('identification-photos')
+        .upload(fileName, blob, { contentType: 'image/jpeg' });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from('identification-photos')
+        .getPublicUrl(fileName);
+
+      const publicUrl = publicUrlData.publicUrl;
+
+      const result = await identifyPlant(publicUrl);
+
+      const { error: dbError } = await supabase.from('identifications').insert({
+        user_id: user.id,
+        image_url: publicUrl,
+        identified_name: result.identified_name,
+        confidence_score: result.confidence_score,
+        ai_response: result.ai_response,
+      });
+
+      if (dbError) throw dbError;
+
+      Alert.alert('✅ Plant Identified', `Name: ${result.identified_name}`);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('❌ Error', 'Something went wrong while identifying the plant.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,6 +94,7 @@ export default function IdentifyScreen() {
         backgroundColor: '#FAF9F6',
       }}>
       <View className="flex-1 items-center px-4 pb-6">
+        <Text className="p-2 text-xl font-bold text-primary">Take a picture to identify...</Text>
         {/* Camera View */}
         <View className="relative h-[80%] w-full overflow-hidden rounded-xl">
           <CameraView
