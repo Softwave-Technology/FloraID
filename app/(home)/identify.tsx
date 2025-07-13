@@ -86,6 +86,14 @@ export default function IdentifyScreen() {
     );
   }
 
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-offwhite">
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView
       style={{
