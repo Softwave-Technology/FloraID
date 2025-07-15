@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { router } from 'expo-router';
 import { View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 import PlantCard from '~/components/PlantCard';
 import VegetableCard from '~/components/VegetableCard';
@@ -14,7 +15,13 @@ export default function Home() {
         <View className="border-b-hairline flex-row items-center justify-between border-bordergray p-2">
           <Text className=" pl-2 text-xl font-extrabold text-primary">Welcome to FloraID</Text>
           {/* Route to users profile and signout etc. */}
-          <FontAwesome name="user" size={24} color={'gray'} onPress={() => {}} className="pr-2" />
+          <FontAwesome
+            name="user"
+            size={24}
+            color={'gray'}
+            onPress={() => router.push('/profile')}
+            className="pr-2"
+          />
         </View>
         <View className="p-2">
           {/* Explore plants horizontal list */}
