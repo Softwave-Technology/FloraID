@@ -30,7 +30,7 @@ export default function PlantDetails() {
         }}>
         <View className="px-4 pb-1 pt-2">
           <Pressable onPress={() => router.back()} className="flex-row items-center gap-1">
-            <FontAwesome size={20} color="#4B6C4A" name="arrow-left" />
+            <FontAwesome size={20} color="#4B6C4A" name="chevron-left" />
             <Text className="text-lg font-medium text-[#4B6C4A]">Back</Text>
           </Pressable>
         </View>

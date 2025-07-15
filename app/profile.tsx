@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { useAuth } from '~/providers/AuthContext';
 
@@ -12,7 +13,12 @@ export default function Profile() {
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         }}>
         <View className="flex-row items-center gap-4 p-2">
-          <FontAwesome name="chevron-left" color={'#2F855A'} size={20} />
+          <FontAwesome
+            name="chevron-left"
+            color={'#2F855A'}
+            size={20}
+            onPress={() => router.back()}
+          />
           <Text className="border-b-hairline border-bordergray text-xl font-bold text-primary">
             Profile
           </Text>
