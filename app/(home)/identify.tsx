@@ -103,7 +103,6 @@ export default function IdentifyScreen() {
       }}>
       <View className="flex-1 items-center px-4 pb-6">
         <Text className="p-2 text-xl font-bold text-primary">Take a picture to identify...</Text>
-        {/* Camera View */}
         <View className="relative h-[80%] w-full overflow-hidden rounded-xl">
           <CameraView
             ref={cameraRef}
@@ -111,8 +110,6 @@ export default function IdentifyScreen() {
             style={{ flex: 1 }}
             className="w-full rounded-xl"
           />
-
-          {/* Overlay using absolute positioning */}
           <View className="absolute inset-0 justify-between p-4">
             <View className="items-end">
               <Pressable onPress={toggleCameraFacing}>
@@ -121,8 +118,7 @@ export default function IdentifyScreen() {
             </View>
           </View>
         </View>
-
-        {/* Scan Button */}
+        {/* Scan Button for taking pic */}
         <View className="mt-6 items-center">
           <Pressable
             onPress={takePicture}
