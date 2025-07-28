@@ -44,6 +44,7 @@ export default function IdentifyScreen() {
 
       const fileName = `${user.id}-${Date.now()}.jpg`;
 
+      // Create the storage bucket into supabase db
       const { error: uploadError } = await supabase.storage
         .from('identification-photos')
         .upload(fileName, blob, { contentType: 'image/jpeg' });
@@ -126,6 +127,7 @@ export default function IdentifyScreen() {
           />
           <Text className="mt-2 text-center font-medium text-gray-700">Scan Plant</Text>
         </View>
+        {/* Add idetified plant informations after idetfying one and disable camera and scan option */}
       </View>
     </SafeAreaView>
   );
